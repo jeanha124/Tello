@@ -10,7 +10,7 @@ const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
 
-router.get('/current', passport.authentication('jwt', {session: false}), (req, res) => {
+router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.json({ 
     id: req.user.id,
     email: req.user.email
