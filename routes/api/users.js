@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 
+const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
+
+
 router.get('/current', passport.authentication('jwt', {session: false}), (req, res) => {
   res.json({ 
     id: req.user.id,
@@ -62,12 +66,12 @@ router.post('/register', (req, res) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
-        errors.email = "User already exists";
+        errors.email = "Email already exists";
         return res.status(400).json(errors);
       } else {
         const newUser = new User({
           email: req.body.email,
-          fullname: req.body.fullname,
+          name: req.body.name,
           password: req.body.password
         })
 
